@@ -53,12 +53,20 @@ var ChatComponentForm = React.createClass({
 var ChatComponent = React.createClass({
   mixins: [Backbone.React.Component.mixin],
 
+  componentDidMount: function(){
+    setInterval(this.handleFetch, 5000);
+  },
+
   getInitialState: function(){
     return {
       usersMessages: [], //use an empty array in order to store the messages
       userMessage: "", //use an empty string in order to hold A message
       collectedMessages: this.props.collection
     }
+  },
+
+  handleFetch: function(){
+    this.state.collectedMessages.fetch();
   },
 
   handleSubmit: function(e){
@@ -84,6 +92,7 @@ var ChatComponent = React.createClass({
           <ChatComponentForm
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
+            userMessage={this.state.userMessage}
           />
         </div>
       </div>

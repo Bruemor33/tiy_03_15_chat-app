@@ -7,9 +7,9 @@ var ChatModel = Backbone.Model.extend({
 });
 
 //Create Application Collection
-var ChatCollection = Backbone.Model.extend({
+var ChatCollection = Backbone.Collection.extend({
   model: ChatModel,
-  url: 'http://tiny-lasagna-server.herokuapp.com/collections/massages'
+  url: 'http://tiny-lasagna-server.herokuapp.com/collections/messages'
 });
 
 //Exports
