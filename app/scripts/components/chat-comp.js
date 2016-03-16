@@ -13,6 +13,43 @@ var application = require('../model/app-model');
 
 var chatRoom = new application.ChatCollection();
 
+var ChatMessages = React.createClass({
+  mixins: [Backbone.React.Component.mixin],
+  render: function(){
+
+    var chatMessages = [];
+    if(this.props.items){
+      chatMessages = this.props.items.map(function(message){
+        return <li key={message.id}>{message.text}</li>;
+      });
+    }
+
+    console.log(this.props.items);
+
+    return(
+      <ul>
+        {chatMessages}
+      </ul>
+    );
+  }
+});
+
+var ChatComponentForm = React.createClass({
+  render: function(){
+    return(
+      <form onSubmit={this.props.handleSubmit}>
+        <input
+          className="message-input"
+          type="text"
+          onChange={this.props.handleChange}
+          value={this.props.text}
+        />
+        <button className="btn btn-primary" type="submit">Enter</button>
+      </form>
+    );
+  }
+});
+
 var ChatComponent = React.createClass({
   mixins: [Backbone.React.Component.mixin],
 
@@ -22,19 +59,35 @@ var ChatComponent = React.createClass({
       userMessage: "", //use an empty string in order to hold A message
       collectedMessages: this.props.collection
     }
-  }
+  },
+
+  handleSubmit: function(e){
+    e.preventDefault();
+
+    this.setState({items: [], text: ''});
+  },
+
+  handleChange: function(e){
+    this.setState({text: e.target.value});
+  },
 
   render: function(){
+
+    console.log(this.state.items);
+
     return (
       <div>
-        <div className="message-print"></div>
-        <input
-          className="message-input"
-          type="text"
-          placeholder="Type Message Here"
-        />
+        <div className="message-print">
+          <ChatMessages items={this.state.usersMessages} />
+        </div>
+        <div>
+          <ChatComponentForm
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+          />
+        </div>
       </div>
-    )
+    );
   }
 });
 

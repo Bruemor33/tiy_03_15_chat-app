@@ -16,6 +16,6 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  React.createElement(ChatApp),
+  React.createElement(ChatComponent),
   document.getElementById('chat-window')
 );
