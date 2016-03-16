@@ -7,7 +7,7 @@ var _ = require('underscore');
 
 //Local Imports
 var UserForm = require('./components/user-comp.js').UserForm;
-var ChatApp = require('./components/chat-comp.js').ChatApp;
+var ChatComponent = require('./components/chat-comp.js').ChatComponent;
 
 //Render to the DOM
 ReactDOM.render(

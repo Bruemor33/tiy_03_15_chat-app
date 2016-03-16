@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
+require('backbone-react-component');
 
 //Local Inports
 var user = require('../model/user-model');
