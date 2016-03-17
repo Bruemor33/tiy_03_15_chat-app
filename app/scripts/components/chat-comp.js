@@ -9,26 +9,20 @@ var parsley = require('parsleyjs');
 require('backbone-react-component');
 
 //Local Inports
-var application = require('../model/app-model');
-
-var chatRoom = new application.ChatCollection();
+// var application = require('../model/app-model');
+//
+// var chatRoom = new application.ChatCollection();
 
 var ChatMessages = React.createClass({
   mixins: [Backbone.React.Component.mixin],
   render: function(){
 
-    var chatMessages = [];
-    if(this.props.items){
-      chatMessages = this.props.items.map(function(message){
-        return <li key={message.id}>{message.text}</li>;
-      });
-    }
-
-    console.log(this.props.items);
-
     return(
       <ul>
-        {chatMessages}
+        <li>
+          <span className="username">{this.props.model.get('username')}</span>
+          <span className="user-message">{this.props.model.get('content')}</span>
+        </li>
       </ul>
     );
   }
@@ -39,15 +33,19 @@ var ChatComponentForm = React.createClass({
     return(
       <form onSubmit={this.props.handleSubmit}>
         <input
+          parsley-type="text"
           className="message-input"
-          type="text"
+          id="chat-input"
+          data-required="true"
+          data-parsley-minlength="1"
           onChange={this.props.handleChange}
-          value={this.props.text}
+          value={this.props.userMessage}
         />
         <button className="btn btn-primary" type="submit">Enter</button>
       </form>
     );
   }
+
 });
 
 var ChatComponent = React.createClass({
@@ -71,30 +69,30 @@ var ChatComponent = React.createClass({
 
   handleSubmit: function(e){
     e.preventDefault();
-
+    console.log(this.props.collection)
     this.setState({items: [], text: ''});
   },
 
   handleChange: function(e){
-    this.setState({text: e.target.value});
+    this.setState({userMessage: e.target.value});
   },
 
   render: function(){
-
-    console.log(this.state.items);
-
+    var messageCollection = this.props.collection.map(function(model){
+      return (
+        <div className="message-print">
+          <ChatMessages model={model} key={model.get('_id')} />
+        </div>
+      )
+    })
     return (
       <div>
-        <div className="message-print">
-          <ChatMessages items={this.state.usersMessages} />
-        </div>
-        <div>
-          <ChatComponentForm
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-            userMessage={this.state.userMessage}
-          />
-        </div>
+
+        <ChatComponentForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          userMessage={this.state.userMessage}
+        />
       </div>
     );
   }

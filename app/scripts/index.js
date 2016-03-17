@@ -8,6 +8,11 @@ var _ = require('underscore');
 //Local Imports
 var UserForm = require('./components/user-comp.js').UserForm;
 var ChatComponent = require('./components/chat-comp.js').ChatComponent;
+var ChatCollection = require('./model/app-model.js').ChatCollection;
+var ChatModel = require('./model/app-model.js').ChatModel
+
+var chatCollection = new ChatCollection();
+var chatModel = new ChatModel();
 
 //Render to the DOM
 ReactDOM.render(
@@ -16,6 +21,6 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  React.createElement(ChatComponent),
+  React.createElement(ChatComponent, {collection: chatCollection, item: chatModel}),
   document.getElementById('chat-window')
 );
