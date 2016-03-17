@@ -6,16 +6,18 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 //Local Imports
-var UserForm = require('./components/user-comp.js').UserForm;
-var ChatComponent = require('./components/chat-comp.js').ChatComponent;
+// var UserForm = require('./components/user-comp.js').UserForm;
+// var ChatComponent = require('./components/chat-comp.js').ChatComponent;
+var PageRouter = require('./router/user-router.js').PageRouter;
 
-//Render to the DOM
-ReactDOM.render(
-  React.createElement(UserForm),
-  document.getElementById('user-creation')
-);
+var router = new PageRouter();
 
-ReactDOM.render(
-  React.createElement(ChatComponent),
-  document.getElementById('chat-window')
-);
+$(function(){
+  Backbone.history.start();
+});
+
+// //Render to the DOM
+// ReactDOM.render(
+//   React.createElement(UserForm),
+//   document.getElementById('user-creation')
+// );

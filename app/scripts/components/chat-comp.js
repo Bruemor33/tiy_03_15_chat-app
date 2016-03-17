@@ -9,9 +9,9 @@ var parsley = require('parsleyjs');
 require('backbone-react-component');
 
 //Local Inports
-var application = require('../model/app-model');
+var Application = require('../model/app-model').ChatCollection;
 
-var chatRoom = new application.ChatCollection();
+var chatRoom = new Application();
 
 var ChatMessages = React.createClass({
   mixins: [Backbone.React.Component.mixin],
@@ -54,7 +54,7 @@ var ChatComponent = React.createClass({
   mixins: [Backbone.React.Component.mixin],
 
   componentDidMount: function(){
-    setInterval(this.handleFetch, 5000);
+    setInterval(this.handleFetch, 1000);
   },
 
   getInitialState: function(){
@@ -66,7 +66,7 @@ var ChatComponent = React.createClass({
   },
 
   handleFetch: function(){
-    this.state.collectedMessages.fetch();
+    collectedMessages.fetch();
   },
 
   handleSubmit: function(e){
@@ -86,7 +86,7 @@ var ChatComponent = React.createClass({
     return (
       <div>
         <div className="message-print">
-          <ChatMessages items={this.state.usersMessages} />
+          <ChatMessages collection={this.state.collectedMessages} />
         </div>
         <div>
           <ChatComponentForm
